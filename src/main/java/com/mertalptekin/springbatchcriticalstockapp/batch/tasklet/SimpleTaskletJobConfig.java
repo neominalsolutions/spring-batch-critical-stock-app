@@ -1,6 +1,5 @@
 package com.mertalptekin.springbatchcriticalstockapp.batch.tasklet;
 
-import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -16,7 +15,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 @EnableBatchProcessing
 @Configuration
-public class TaskletJobConfig {
+public class SimpleTaskletJobConfig {
 
     // Not: Bu kısımda Tasklet Job örneğimiz ile ilgili tanımlamaları yapıcaz.
     // Not: Her tasklet için bir step tanımlanır ve bu step'ler job içerisinde kullanılır.
