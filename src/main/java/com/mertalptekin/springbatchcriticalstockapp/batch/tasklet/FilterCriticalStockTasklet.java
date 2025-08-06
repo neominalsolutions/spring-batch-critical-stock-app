@@ -20,6 +20,8 @@ public class FilterCriticalStockTasklet implements Tasklet {
         List<Product> products = (List<Product>) chunkContext.getStepContext().getStepExecution().getJobExecution()
                 .getExecutionContext().get("products");
 
+        System.out.println("FilterCriticalStockTasklet");
+
         if (products == null || products.isEmpty()) {
             System.out.println("No products found in the context.");
             contribution.setExitStatus(ExitStatus.FAILED);

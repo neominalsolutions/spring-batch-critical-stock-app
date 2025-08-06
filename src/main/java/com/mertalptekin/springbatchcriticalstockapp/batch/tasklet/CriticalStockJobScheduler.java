@@ -22,7 +22,7 @@ public class CriticalStockJobScheduler { // Zamanlanmış görevleri çalıştı
     private Job job;
 
     // @Scheduled(fixedRate = 5000 * 60,fixedDelay = 3000 * 60) // Runs every 5 minutes
-    @Scheduled(cron = "0 * * * * *")
+    //@Scheduled(cron = "0 * * * * *")
     public void runCriticalStockJob() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
 
         var paramBuilder = new JobParametersBuilder();

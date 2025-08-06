@@ -35,6 +35,10 @@ public class BatchController {
     @Qualifier("criticalStockJob") // Job'ımızı ismiyle alıyoruz, @Qualifier ile job'ı alabiliriz.
     private Job criticalStockJob;
 
+    @Autowired
+    @Qualifier("criticalStockJobFlow") // Job'ımızı ismiyle alıyoruz, @Qualifier ile job'ı alabiliriz.
+    private Job criticalStockJobFlow; // Job'ımızı burada tanımlıyoruz, @Autowired ile job'ı alabiliriz.
+
     @PostMapping("runSampleTaskletJob")
     public ResponseEntity<String> runTaskletBatchJob() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
             // JobLauncher ile job'ı çalıştırıyoruz, jobLauncher.run() metodu ile job'ı çalıştırabiliriz.
@@ -47,6 +51,18 @@ public class BatchController {
         return ResponseEntity.ok("Tasklet Job started successfully");
     }
 
+    @PostMapping("runCriticalStockJobFlow")
+    public ResponseEntity<String> runCriticalStockJobFlow() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
+        JobParameters jobParameters = new JobParametersBuilder()
+                .addString("jobName","runCriticalStockJobFlow")
+                .addLong("executionTime", System.currentTimeMillis()) // yeni parametre aldığında her seferince çalışacaktır.
+                .toJobParameters();
+        jobLauncher.run(criticalStockJobFlow, jobParameters);
+
+        return ResponseEntity.ok("Critical Stock Job Flow started successfully");
+    }
+
+
     @PostMapping("runCriticalStockJob")
     public ResponseEntity<String> runCriticalStockJob() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
         JobParameters jobParameters = new JobParametersBuilder()
@@ -57,6 +73,7 @@ public class BatchController {
 
         return ResponseEntity.ok("Critical Stock Job started successfully");
     }
+
 
 
 }

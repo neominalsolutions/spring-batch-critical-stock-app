@@ -31,6 +31,8 @@ public class LoadProductsFromApiTasklet implements Tasklet {
        var response =  restTemplate.exchange(apiUrl,HttpMethod.GET,null,ProductRequestDto.class);
         List<Product> products = response.getBody().getValue();
 
+        System.out.println("LoadProductsFromApiTasklet");
+
         if(products == null || products.isEmpty()) {
             System.out.println("No products found in the API response.");
             // ilgili tasklet içerisinde sürecin çıkması için exit status kullanırız.
@@ -41,8 +43,10 @@ public class LoadProductsFromApiTasklet implements Tasklet {
             contribution.incrementReadCount();
             contribution.incrementWriteCount(products.size()); // İşleme alınacak sayı
 
-            chunkContext.getStepContext().getStepExecution().getJobExecution().getExecutionContext().put("products", products);
+            // chunkContext.getStepContext().getStepExecution().getJobExecution().getExecutionContext().put("products", products);
 
+            // product size 0 test
+            chunkContext.getStepContext().getStepExecution().getJobExecution().getExecutionContext().put("products", List.of());
             return RepeatStatus.FINISHED;
         }
 
