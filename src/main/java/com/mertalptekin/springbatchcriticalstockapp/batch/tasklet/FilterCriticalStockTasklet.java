@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class FilterCrtiticalStockTasklet implements Tasklet {
+public class FilterCriticalStockTasklet implements Tasklet {
 
 
     @Override
@@ -30,7 +30,7 @@ public class FilterCrtiticalStockTasklet implements Tasklet {
           // Eğer filtrelenmiş kaç adet ürün var bunu veri kaynağı kaydetmek için yaptık.
           contribution.incrementFilterCount(filteredProducts.size());
 
-          chunkContext.getStepContext().getStepExecution().getJobExecution().getExecutionContext().put("filteredProducts", List.of(filteredProducts));
+          chunkContext.getStepContext().getStepExecution().getJobExecution().getExecutionContext().put("filteredProducts", filteredProducts);
         }
 
         return null;
