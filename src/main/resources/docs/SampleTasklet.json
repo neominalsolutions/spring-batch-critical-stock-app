@@ -1,0 +1,71 @@
+{
+	"info": {
+		"_postman_id": "2885c88f-7bf5-4480-93fa-356fedfe56bf",
+		"name": "SampleTasklet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40527392",
+		"_collection_link": "https://neominal-solutions2024.postman.co/workspace/GarantiSpringBatchApp~6f873483-fe21-4a08-918a-e8206fa47115/collection/40527392-2885c88f-7bf5-4480-93fa-356fedfe56bf?action=share&source=collection_link&creator=40527392"
+	},
+	"item": [
+		{
+			"name": "SampleTaskletJob",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/batch/runSampleTaskletJob",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"batch",
+						"runSampleTaskletJob"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "runCriticalStockJob",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/batch/runCriticalStockJob",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"batch",
+						"runCriticalStockJob"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "runCriticalStockJobFlow",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/batch/runCriticalStockJobFlow",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"batch",
+						"runCriticalStockJobFlow"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
