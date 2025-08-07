@@ -111,4 +111,21 @@ public class BatchController {
     }
 
 
+    @Autowired
+    @Qualifier("customerFlowJob")
+    private Job customerFlowJob;
+
+
+    @PostMapping("runCustomerFlowJob")
+    public ResponseEntity<String> runCustomerFlowJob() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
+        JobParameters jobParameters = new JobParametersBuilder()
+                .addString("jobName","CustomerFlowJob")
+                .addLong("executionTime", System.currentTimeMillis())
+                .toJobParameters();
+        jobLauncher.run(customerFlowJob, jobParameters);
+
+        return ResponseEntity.ok("CustomerFlowJob Job started successfully");
+    }
+
+
 }
