@@ -6,10 +6,9 @@ import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Component;
 
 //@Component
-public class CustomerItemReader implements ItemReader<CustomerDto> {
+public class CustomerItemReader extends FlatFileItemReader<CustomerDto> {
     @Override
     public CustomerDto read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
 
