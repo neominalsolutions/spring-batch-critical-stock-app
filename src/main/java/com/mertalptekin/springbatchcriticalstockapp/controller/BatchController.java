@@ -91,4 +91,24 @@ public class BatchController {
     }
 
 
+
+    // Not: ChunkOriented ProductChunkDto örneği için kullanıyoruz
+
+    @Autowired
+    @Qualifier("chunkOrientedProductJob")
+    private Job chunkOrientedProductJob;
+
+
+    @PostMapping("runChunkOrientedProductJob")
+    public ResponseEntity<String> runChunkOrientedProductJob() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
+        JobParameters jobParameters = new JobParametersBuilder()
+                .addString("jobName","ChunkOrientedProductJob")
+                .addLong("executionTime", System.currentTimeMillis())
+                .toJobParameters();
+        jobLauncher.run(chunkOrientedProductJob, jobParameters);
+
+        return ResponseEntity.ok("ChunkOrientedProductJob Job started successfully");
+    }
+
+
 }
