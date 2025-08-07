@@ -43,10 +43,10 @@ public class LoadProductsFromApiTasklet implements Tasklet {
             contribution.incrementReadCount();
             contribution.incrementWriteCount(products.size()); // İşleme alınacak sayı
 
-            // chunkContext.getStepContext().getStepExecution().getJobExecution().getExecutionContext().put("products", products);
+            chunkContext.getStepContext().getStepExecution().getJobExecution().getExecutionContext().put("products", products);
 
-            // product size 0 test
-            chunkContext.getStepContext().getStepExecution().getJobExecution().getExecutionContext().put("products", List.of());
+            // product fail test
+            // chunkContext.getStepContext().getStepExecution().getJobExecution().getExecutionContext().put("products", List.of());
             return RepeatStatus.FINISHED;
         }
 
