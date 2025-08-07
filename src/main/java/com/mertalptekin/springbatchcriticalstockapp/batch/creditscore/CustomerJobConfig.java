@@ -4,6 +4,7 @@ import com.mertalptekin.springbatchcriticalstockapp.dto.CustomerDto;
 import com.mertalptekin.springbatchcriticalstockapp.entity.CreditCustomer;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
@@ -64,6 +65,8 @@ public class CustomerJobConfig {
         return  reader;
     }
 
+
+
     // Tasklet Step yapılarında fault tolerant çalışmaz.
     @Bean
     public Step customerCsvStep() {
@@ -77,13 +80,40 @@ public class CustomerJobConfig {
                 .skipLimit(10) // Maksimum 10 kez atlanacak istisna sayısı
                 .retry(Exception.class)
                 .retryLimit(3)
+                .listener(new CustomerItemSkipListener())
+                .listener((StepExecutionListener) new CustomerItemProcessorListener())
                 .build();
     }
+
+    // Step Listenerları eğer faulttolerant bir değer ise en sona yazalım. Garanti olsun diye en sona build öncesi yazalım.
+
+    @Bean
+    public  Tasklet showCustomerCreditScoresTasklet(){
+        return (stepContribution, chunkContext) -> {
+
+            Integer high = (Integer)chunkContext.getStepContext().getStepExecution().getJobExecution().getExecutionContext().get("highCreditCustomersCount");
+            Integer low = (Integer)chunkContext.getStepContext().getStepExecution().getJobExecution().getExecutionContext().get("lowCreditCustomersCount");
+
+            System.out.println("Toplam kredi notu 600 ve üzeri olan müşteri sayısı: " + high);
+            System.out.println("Toplam kredi notu 600 ve altı olan müşteri sayısı: " + low);
+
+            return RepeatStatus.FINISHED; // Başarılı işlem durumu
+        };
+    }
+
+    @Bean
+    public  Step showCustomerCreditScoresStep() {
+        return  new StepBuilder("showCustomerCreditScoresStep", jobRepository)
+                .tasklet(showCustomerCreditScoresTasklet(), entityTransactionManager)
+                .build();
+    }
+
 
     @Bean(name = "customerFlowJob")
     public Job customerFlowJob() {
         return new JobBuilder("customerFlowJob", jobRepository)
                 .start(customerCsvStep())
+                .next(showCustomerCreditScoresStep())
                 .build();
     }
 

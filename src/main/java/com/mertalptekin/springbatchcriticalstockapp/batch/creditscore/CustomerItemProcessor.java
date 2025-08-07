@@ -11,7 +11,7 @@ public class CustomerItemProcessor implements ItemProcessor<CustomerDto, CreditC
     public CreditCustomer process(CustomerDto item) throws Exception {
 
         // buradaki processor bu durumda filter ve entity map amaçlı kullanılıdı.
-        if(item.getCreditScore() < 600){
+        if(item.getCreditScore() > 600){
 
             var creditCustomer = new CreditCustomer();
             creditCustomer.setAge(item.getAge());
