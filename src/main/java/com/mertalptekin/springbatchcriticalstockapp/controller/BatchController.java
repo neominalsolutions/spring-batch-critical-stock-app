@@ -74,6 +74,21 @@ public class BatchController {
         return ResponseEntity.ok("Critical Stock Job started successfully");
     }
 
+    @Autowired
+    @Qualifier("simpleChunkOrientedJob")
+    private Job simpleChunkOrientedJob;
+
+
+    @PostMapping("runSimpleChunkOrientedJob")
+    public ResponseEntity<String> runSimpleChunkOrientedJob() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
+        JobParameters jobParameters = new JobParametersBuilder()
+                .addString("jobName","SimpleChunkOrientedJob")
+                .addLong("executionTime", System.currentTimeMillis())
+                .toJobParameters();
+        jobLauncher.run(simpleChunkOrientedJob, jobParameters);
+
+        return ResponseEntity.ok("SimpleChunkOriented Job started successfully");
+    }
 
 
 }
